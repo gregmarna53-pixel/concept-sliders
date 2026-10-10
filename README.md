@@ -140,7 +140,9 @@ python generate_slider_demos.py
 python generate_slider_demos.py --sliders fatcat weather
 ```
 
-输出写到 `images/demo_<name>.png`。脚本默认走本地 HuggingFace 缓存(`HF_HUB_OFFLINE=1`);首次运行请先让 `CompVis/stable-diffusion-v1-4` 下载完整。
+输出写到 `images/demo_<name>.png`。
+
+基座模型 `CompVis/stable-diffusion-v1-4` 约 4GB:脚本会先检测本地 HuggingFace 缓存,已缓存则离线运行,未缓存则自动下载(所以新机器上第一次跑需要联网,之后可离线)。GPU 浮点运算存在非确定性,固定种子可以保证构图一致,但两次运行的像素不会逐字节相同。
 
 权重位于 [models/](models/),命名格式为 `<名称>_alpha1.0_rank4_noxattn_{500steps,last}.safetensors`,两者效果相近,复现下图使用的是 `_500steps` 版本。
 

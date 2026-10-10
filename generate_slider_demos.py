@@ -16,9 +16,21 @@ import gc
 import os
 from pathlib import Path
 
-# The base model is already in the local HF cache; never reach for the network.
-os.environ.setdefault("HF_HUB_OFFLINE", "1")
-os.environ.setdefault("TRANSFORMERS_OFFLINE", "1")
+def _base_model_is_cached() -> bool:
+    """True when CompVis/stable-diffusion-v1-4 already has a local snapshot."""
+    from huggingface_hub import constants
+
+    snapshots = (
+        Path(constants.HF_HUB_CACHE) / "models--CompVis--stable-diffusion-v1-4" / "snapshots"
+    )
+    return snapshots.is_dir() and any(snapshots.iterdir())
+
+
+# Only pin to the cache when the base model is already downloaded. On a fresh
+# checkout it must stay free to fetch the model, otherwise the first run fails.
+if _base_model_is_cached():
+    os.environ.setdefault("HF_HUB_OFFLINE", "1")
+    os.environ.setdefault("TRANSFORMERS_OFFLINE", "1")
 
 import torch
 from PIL import Image, ImageDraw, ImageFont
