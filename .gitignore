@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# IDE
+.idea/
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Training / inference scratch output
+*.log
+outputs/
+logs/
+checkpoints/
+
+# NOTE: models/ and weights/ are intentionally NOT ignored.
+# The trained sliders in models/ and weights/ are part of this repo's
+# deliverable so that inference can be run without retraining.
